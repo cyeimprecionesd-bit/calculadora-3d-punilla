@@ -1,3 +1,466 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#ffffff">
+
+<title>Calculadora 3D | Filamentos Punilla</title>
+
+<style>
+
+:root {
+
+  --green: #28734e;
+
+  --green-light: #eaf4ed;
+
+  --dark: #26332b;
+
+  --gray: #778078;
+
+  --border: #e7ece8;
+
+  --bg: #f7f9f7;
+
+}
+
+* {
+
+  box-sizing: border-box;
+
+  margin: 0;
+
+  padding: 0;
+
+}
+
+body {
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  background: var(--bg);
+
+  color: var(--dark);
+
+  padding: 25px 15px;
+
+}
+
+.container {
+
+  max-width: 850px;
+
+  margin: auto;
+
+}
+
+header {
+
+  text-align: center;
+
+  margin-bottom: 30px;
+
+}
+
+.logo {
+
+  width: 65px;
+
+  height: 65px;
+
+  background: var(--green-light);
+
+  color: var(--green);
+
+  border-radius: 18px;
+
+  display: grid;
+
+  place-items: center;
+
+  font-weight: bold;
+
+  font-size: 25px;
+
+  margin: 0 auto 15px;
+
+}
+
+header h1 {
+
+  font-size: 27px;
+
+  margin-bottom: 8px;
+
+}
+
+header p {
+
+  font-size: 14px;
+
+  color: var(--gray);
+
+  line-height: 1.6;
+
+}
+
+.brand {
+
+  color: var(--green);
+
+  font-weight: bold;
+
+  margin-top: 8px;
+
+}
+
+.section, .results {
+
+  background: white;
+
+  border: 1px solid var(--border);
+
+  border-radius: 15px;
+
+  padding: 24px;
+
+  margin-bottom: 17px;
+
+}
+
+.section h2, .results h2 {
+
+  font-size: 17px;
+
+  margin-bottom: 20px;
+
+}
+
+.fields {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 17px;
+
+}
+
+.field {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+
+}
+
+.field.full {
+
+  grid-column: 1 / -1;
+
+}
+
+label {
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+input, select {
+
+  height: 46px;
+
+  width: 100%;
+
+  padding: 0 12px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  background: white;
+
+  color: var(--dark);
+
+  font-size: 15px;
+
+  outline: none;
+
+}
+
+input:focus, select:focus {
+
+  border-color: var(--green);
+
+  box-shadow: 0 0 0 3px var(--green-light);
+
+}
+
+.hint {
+
+  color: var(--gray);
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+}
+
+.cost-line {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid var(--border);
+
+  font-size: 14px;
+
+}
+
+.cost-line span {
+
+  color: var(--gray);
+
+}
+
+.cost-line strong {
+
+  text-align: right;
+
+}
+
+.total {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 20px 0;
+
+  font-weight: bold;
+
+}
+
+.total strong {
+
+  font-size: 25px;
+
+}
+
+.price-grid {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px;
+
+}
+
+.price-card {
+
+  background: var(--green-light);
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+}
+
+.price-card small {
+
+  color: var(--green);
+
+  font-weight: bold;
+
+  font-size: 12px;
+
+}
+
+.price-card strong {
+
+  display: block;
+
+  color: var(--green);
+
+  font-size: 23px;
+
+  margin: 12px 0 8px;
+
+  overflow-wrap: anywhere;
+
+}
+
+.price-card p {
+
+  font-size: 11px;
+
+  color: var(--gray);
+
+}
+
+.actions {
+
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 22px;
+
+}
+
+button {
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  font-weight: bold;
+
+  font-size: 14px;
+
+}
+
+.reset {
+
+  flex: 1;
+
+  background: #f0f2f0;
+
+  color: var(--dark);
+
+}
+
+.share {
+
+  flex: 2;
+
+  background: var(--green);
+
+  color: white;
+
+}
+
+button:hover {
+
+  opacity: .88;
+
+}
+
+footer {
+
+  text-align: center;
+
+  margin-top: 25px;
+
+  color: var(--gray);
+
+  font-size: 12px;
+
+  line-height: 1.8;
+
+}
+
+@media(max-width: 550px) {
+
+  body {
+
+    padding: 18px 12px;
+
+  }
+
+  .section, .results {
+
+    padding: 18px;
+
+  }
+
+  .fields {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .field.full {
+
+    grid-column: auto;
+
+  }
+
+  .price-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  header h1 {
+
+    font-size: 23px;
+
+  }
+
+  .actions {
+
+    flex-direction: column;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+  <div class="logo">3D</div>
+
+  <h1>Calculadora de impresión 3D</h1>
+
+  <p>Calculá tus costos y obtené tus precios de venta.</p>
+
+  <p class="brand">FILAMENTOS PUNILLA</p>
+
+</header>
+
+<section class="section"><div class="field">
+  <label>Tipo de filamento</label>
+  <select id="material">
+    <option>PLA</option>
+    <option>PLA+</option>
+    <option>PETG</option>
+    <option>ABS</option>
+    <option>ASA</option>
+    <option>TPU</option>
+    <option>Otro</option>
+  </select>
+</div>
+
 <div class="field">
   <label>Precio del kilo ($)</label>
   <input type="number" id="kilo" value="18000" min="0" step="any">
@@ -6,7 +469,14 @@
 <div class="field">
   <label>Gramos utilizados</label>
   <input type="number" id="gramos" value="85" min="0" step="any">
-</div><div class="field">
+</div>
+
+<div class="field">
+  <label>Horas de impresión</label>
+  <input type="number" id="horas" value="6" min="0" step="1">
+</div>
+
+<div class="field">
   <label>Minutos de impresión</label>
   <input type="number" id="minutos" value="30" min="0" max="59" step="1">
 </div>
@@ -22,17 +492,43 @@
 </div>
 
 <div class="field full">
-  <label>Desgaste y mantenimiento por hora ($)</label>
+  <label>Desgaste de máquina por hora ($)</label>
   <input type="number" id="desgaste" value="500" min="0" step="any">
   <span class="hint">Incluye mantenimiento y amortización de la impresora.</span>
-</div><div class="field">
+</div>
+
+<div class="field">
+  <label>Mano de obra ($)</label>
+  <input type="number" id="mano" value="500" min="0" step="any">
+</div>
+
+<div class="field">
   <label>Otros gastos ($)</label>
   <input type="number" id="otros" value="0" min="0" step="any">
-</div><div class="field">
+</div>
+
+<div class="field">
+  <label>Ganancia mayorista (%)</label>
+  <input type="number" id="mayorista" value="40" min="0" step="any">
+</div>
+
+<div class="field">
   <label>Ganancia minorista (%)</label>
   <input type="number" id="minorista" value="100" min="0" step="any">
-</div><div class="price-card">
+</div>
+
+<div class="price-card">
+  <small>PRECIO MAYORISTA</small>
+  <strong id="rMayorista">$0</strong>
+  <p>Costo más ganancia mayorista</p>
+</div>
+
+<div class="price-card">
   <small>PRECIO AL PÚBLICO</small>
   <strong id="rMinorista">$0</strong>
-  <p>Incluye ganancia minorista</p>
+  <p>Costo más ganancia minorista</p>
 </div>
+
+<button class="share" type="button" onclick="compartir()">
+  Compartir presupuesto
+</button>
