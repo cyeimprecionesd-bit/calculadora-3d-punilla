@@ -623,17 +623,6 @@ if (campo) {
 });
 
 calcular();
-
-if (campo) {
-    campo.addEventListener("input", calcular);
-    campo.addEventListener("change", calcular);
-} else {
-    console.warn("No se encontró el campo:", id);
-}
-});
-
-calcular();
-
 function resetear() {
   ids.forEach(id => {
     document.getElementById(id).value = valoresIniciales[id];
