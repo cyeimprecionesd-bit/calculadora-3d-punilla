@@ -517,4 +517,127 @@ footer {
 
 <button class="share" type="button" onclick="compartir()">
   Compartir presupuesto
-</button>
+</
+ </div>
+</section>
+
+<footer>
+  <strong>FILAMENTOS PUNILLA</strong><br>
+  Calculadora de costos de impresión 3D.<br>
+  Los resultados son estimativos.
+</footer>
+
+</div>
+
+<script>
+const ids = [
+  "material", "kilo", "gramos", "horas", "minutos",
+  "watts", "kwh", "desgaste", "mano", "otros",
+  "mayorista", "minorista"
+];
+
+const valoresIniciales = {
+  material: "PLA",
+  kilo: 18000,
+  gramos: 85,
+  horas: 6,
+  minutos: 30,
+  watts: 150,
+  kwh: 200,
+  desgaste: 500,
+  mano: 500,
+  otros: 0,
+  mayorista: 40,
+  minorista: 100
+};
+
+function numero(id) {
+  const valor = Number(document.getElementById(id).value);
+  return Number.isFinite(valor) ? Math.max(0, valor) : 0;
+}
+
+function dinero(valor) {
+  return new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 2
+  }).format(valor);
+}
+
+function calcular() {
+  const tiempo = numero("horas") + numero("minutos") / 60;
+
+  const material = numero("gramos") * numero("kilo") / 1000;
+
+  const electricidad =
+    tiempo * numero("watts") / 1000 * numero("kwh");
+
+  const desgaste = tiempo * numero("desgaste");
+  const mano = numero("mano");
+  const otros = numero("otros");
+
+  const costo = material + electricidad + desgaste + mano + otros;
+
+  const mayorista =
+    costo * (1 + numero("mayorista") / 100);
+
+  const minorista =
+    costo * (1 + numero("minorista") / 100);
+
+  document.getElementById("rMaterial").textContent = dinero(material);
+  document.getElementById("rElectricidad").textContent = dinero(electricidad);
+  document.getElementById("rDesgaste").textContent = dinero(desgaste);
+  document.getElementById("rMano").textContent = dinero(mano);
+  document.getElementById("rOtros").textContent = dinero(otros);
+  document.getElementById("rCosto").textContent = dinero(costo);
+  document.getElementById("rMayorista").textContent = dinero(mayorista);
+  document.getElementById("rMinorista").textContent = dinero(minorista);
+
+  return {material: material, tiempo: tiempo, costo: costo,
+    mayorista: mayorista, minorista: minorista};
+}
+
+ids.forEach(id => {
+  document.getElementById(id).addEventListener("input", calcular);
+  document.getElementById(id).addEventListener("change", calcular);
+});
+
+function resetear() {
+  ids.forEach(id => {
+    document.getElementById(id).value = valoresIniciales[id];
+  });
+  calcular();
+}
+
+async function compartir() {
+  const r = calcular();
+
+  const texto =
+    "FILAMENTOS PUNILLA - PRESUPUESTO 3D\n\n" +
+    "Costo de fabricación: " + dinero(r.costo) + "\n" +
+    "Precio mayorista: " + dinero(r.mayorista) + "\n" +
+    "Precio al público: " + dinero(r.minorista);
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: "Presupuesto de impresión 3D",
+        text: texto
+      });
+    } else {
+      await navigator.clipboard.writeText(texto);
+      alert("Presupuesto copiado correctamente.");
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      alert("No se pudo compartir el presupuesto.");
+    }
+  }
+}
+
+calcular();
+</script>
+
+</body>
+</html>
+ >
