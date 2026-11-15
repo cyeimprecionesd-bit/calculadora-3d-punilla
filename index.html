@@ -492,6 +492,9 @@ footer {
 <div class="field">
   <label>Mano de obra ($)</label>
   <input type="number" id="mano" value="500" min="0" step="any">
+<div class="field">
+  <label>Otros gastos ($)</label>
+  <input type="number" id="otros" value="0" min="0" step="any">
 </div>
 <div class="field">
     <label>Otros gastos ($)</label>
@@ -547,7 +550,7 @@ footer {
 <script>
 const ids = [
   "material", "kilo", "gramos", "horas", "minutos",
-  "watts", "kwh", "desgaste", "mano",
+  "watts", "kwh", "desgaste", "mano", "otros",
   "mayorista", "minorista"
 ];
 
