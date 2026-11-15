@@ -598,15 +598,20 @@ function calcular() {
   document.getElementById("rCosto").textContent = dinero(costo);
   document.getElementById("rMayorista").textContent = dinero(mayorista);
   document.getElementById("rMinorista").textContent = dinero(minorista);
-
-  return {material: material, tiempo: tiempo, costo: costo,
-    mayorista: mayorista, minorista: minorista};
-}
-
+ return {material: material, tiempo: tiempo, costo: costo,
+    mayorista: mayorista, minorista: minorista};}
 ids.forEach(id => {
-  document.getElementById(id).addEventListener("input", calcular);
-  document.getElementById(id).addEventListener("change", calcular);
+const campo = document.getElementById(id);
+
+if (campo) {
+    campo.addEventListener("input", calcular);
+    campo.addEventListener("change", calcular);
+} else {
+    console.warn("No se encontró el campo:", id);
+}
 });
+
+calcular();
 
 function resetear() {
   ids.forEach(id => {
