@@ -547,7 +547,9 @@ footer {
 
 <button class="share" type="button" onclick="compartir()">
   Compartir presupuesto
-</
+</<button class="share" type="button" onclick="reiniciar()">
+  Reiniciar calculadora
+</button>
  </div>
 </section>
 
@@ -667,7 +669,9 @@ async function compartir() {
     }
   }
 }
-
+function reiniciar() {
+  location.reload();
+}
 calcular();
 </script>
 
