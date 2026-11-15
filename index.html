@@ -547,7 +547,7 @@ footer {
 <script>
 const ids = [
   "material", "kilo", "gramos", "horas", "minutos",
-  "watts", "kwh", "desgaste", "mano", "otros",
+  "watts", "kwh", "desgaste", "mano",
   "mayorista", "minorista"
 ];
 
@@ -589,8 +589,7 @@ function calcular() {
 
   const desgaste = tiempo * numero("desgaste");
   const mano = numero("mano");
-  const otros = numero("otros");
-
+  const otros = 0;
   const costo = material + electricidad + desgaste + mano + otros;
 
   const mayorista =
@@ -611,6 +610,16 @@ function calcular() {
     mayorista: mayorista, minorista: minorista};}
 ids.forEach(id => {
 const campo = document.getElementById(id);
+
+if (campo) {
+    campo.addEventListener("input", calcular);
+    campo.addEventListener("change", calcular);
+} else {
+    console.warn("No se encontró el campo:", id);
+}
+});
+
+calcular();
 
 if (campo) {
     campo.addEventListener("input", calcular);
